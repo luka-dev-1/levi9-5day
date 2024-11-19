@@ -1,1 +1,1 @@
-from player import PlayerNickname
+from player import PlayerNickname, Player
