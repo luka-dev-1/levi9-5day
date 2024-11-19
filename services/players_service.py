@@ -1,18 +1,19 @@
-from models import PlayerNickname, Player
+from models import Player
 from config import redis_client
 
-def player_create(nickname: PlayerNickname):
+
+def player_create(nickname: str):
     """ Create a new player with the given nickname. """
     try:
         exists = redis_client.hexists("players", nickname)
         if exists:
-            return 400, "Player already exists"
+            return "Player already exists", 400
         
         player = Player(nickname=nickname)
-        redis_client.hset("players", player.nickname, player)
-        return 200, player
+        redis_client.hset("players", player.nickname, player.to_json())
+        return player.to_json(), 201
     except Exception as e:
-        return 400, str(e)
+        return str(e), 400
     
 def player_get(id: int):
     """ Get a player by their id. """

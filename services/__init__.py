@@ -1,1 +1,1 @@
-import players_service
+from services import players_service

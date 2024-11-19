@@ -1,1 +1,1 @@
-from player import PlayerNickname, Player
+from models.player import Player

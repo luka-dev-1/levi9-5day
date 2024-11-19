@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from dotenv import load_dotenv
 from flask_redis import FlaskRedis
@@ -19,3 +19,13 @@ app.config['REDIS_URL'] = f"redis://{redis_config['host']}:{redis_config['port']
 CORS(app)
 
 redis_client = FlaskRedis(app)
+
+@app.after_request
+def after_request(response):
+    """ Middleware to wrap responses with status code >= 400 into a standardized message."""
+    if response.status_code >= 400:
+        response_data = {
+           'message': response.get_data(as_text=True),
+        }
+    
+    return make_response(jsonify(response_data), response.status_code)  
