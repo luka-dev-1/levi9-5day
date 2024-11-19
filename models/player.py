@@ -1,9 +1,10 @@
+import uuid
 class PlayerNickname: 
     def __init__(self, nickname):
         self.nickname = nickname
 
 class Player:
-    def __init__(self, id, nickname, wins=0, losses=0, elo=0, hours_played=0, team=None, rating_adjustment=None):
+    def __init__(self, nickname, id=uuid.uuid5(), wins=0, losses=0, elo=0, hours_played=0, team=None, rating_adjustment=None):
         self.id = id
         self.nickname = nickname
         self.wins = wins
